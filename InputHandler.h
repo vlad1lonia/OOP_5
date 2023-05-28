@@ -6,24 +6,28 @@
 #define OOP_5_COPIED_INPUTHANDLER_H
 
 
-#include "TreeNode.h"
-#include "System.h"
+#include "ObjectsClass.h"
+#include "AppClass.h"
 
-class InputHandler : public TreeNode
-{
+class InputHandler : public ObjectsClass {
+
 private:
-    int prevSent = 0;
+    int sent_count = 0;
     int tick = 0;
-    bool tryParseCMD(std::string& data, std::string cmd);
+    bool command_execution(string& data, string command);
+
 public:
-    InputHandler(TreeNode* head, std::string nodeName);
-    void handleRequireInput(std::string message);
-    void addPagerSignal(std::string& message);
-    void onSendMessageSignal(std::string& message);
-    void onShowTreeSignal(std::string& message);
-    void onTickSignal(std::string& message);
-    void onGetPagerStatusSignal(std::string& message);
-    void onGetSystemStatusSignal(std::string& message);
+    InputHandler(ObjectsClass* head, string object_name);
+    void input_handler(string message);
+
+    void pager_addition_signal(string& message);
+    void pager_status_signal(string& message);
+
+    void app_class_status_signal(string& message);
+    void enter_message_signal(string& message);
+
+    void show_tree_signal(string& message);
+    void tick_signal(string& message);
 };
 
 

@@ -5,70 +5,66 @@
 #include "InputHandler.h"
 
 
-InputHandler::InputHandler(TreeNode* head, std::string nodeName) : TreeNode(head,
-                                                                            nodeName) { }
-void InputHandler::addPagerSignal(std::string& message) { }
-void InputHandler::onSendMessageSignal(std::string& message) { }
-void InputHandler::onShowTreeSignal(std::string& message) { }
-void InputHandler::onTickSignal(std::string& message) { }
-void InputHandler::onGetPagerStatusSignal(std::string& message) { }
-void InputHandler::onGetSystemStatusSignal(std::string& message) { }
-void InputHandler::handleRequireInput(std::string message)
-{
-    std::string data;
-    std::getline(std::cin, data);
-    if (message == "PAGER")
-    {
+InputHandler::InputHandler(ObjectsClass *head, string object_name) : ObjectsClass(head,
+                                                                                  object_name) {}
+
+void InputHandler::pager_addition_signal(string &message) {}
+
+void InputHandler::enter_message_signal(string &message) {}
+
+void InputHandler::show_tree_signal(string &message) {}
+
+void InputHandler::tick_signal(string &message) {}
+
+void InputHandler::pager_status_signal(string &message) {}
+
+void InputHandler::app_class_status_signal(string &message) {}
+
+void InputHandler::input_handler(string message) {
+
+    string data;
+    getline(cin, data);
+    if (message == "PAGER") {
         if (data != "End of information about pagers")
-            emitSignal(AS_SIGNAL(InputHandler::addPagerSignal), data);
+            emit_command(SIGNAL_D(InputHandler::pager_addition_signal), data);
         else
-            findByPath("/")->setState(2);
+            find_object_by_coordinate("/")->set_state(2);
     }
-    if (message == "COMMAND")
-    {
-        if (data != "Turn off the system")
-        {
-            if (prevSent != 0 && data.rfind("Send a message") != 0)
-            {
+    if (message == "COMMAND") {
+        if (data != "Turn off the system") {
+            if (sent_count != 0 && data.rfind("Send a message") != 0) {
                 tick++;
-                emitSignal(AS_SIGNAL(InputHandler::onTickSignal),
-                           std::to_string(tick));
+                emit_command(SIGNAL_D(InputHandler::tick_signal),
+                             to_string(tick));
             }
-            if (tryParseCMD(data, "SHOWTREE"))
-                emitSignal(AS_SIGNAL(InputHandler::onShowTreeSignal),
-                           "SHOWTREE");
-            if (tryParseCMD(data, "Display the system status"))
-                emitSignal(AS_SIGNAL(InputHandler::onGetSystemStatusSignal), data);
-            if (tryParseCMD(data, "Display the pager status"))
-            emitSignal(AS_SIGNAL(InputHandler::onGetPagerStatusSignal), data);
-            if (tryParseCMD(data, "Send a message"))
-            {
-                emitSignal(AS_SIGNAL(InputHandler::onSendMessageSignal),
-                           data);
-                prevSent++;
+
+            if (command_execution(data, "SHOWTREE")) {
+                emit_command(SIGNAL_D(InputHandler::show_tree_signal), "SHOWTREE");
+            } else if (command_execution(data, "Display the system status")) {
+                emit_command(SIGNAL_D(InputHandler::app_class_status_signal), data);
+            } else if (command_execution(data, "Display the pager status")) {
+                emit_command(SIGNAL_D(InputHandler::pager_status_signal), data);
             }
-            else
-            {
-                tick++;
-                emitSignal(AS_SIGNAL(InputHandler::onTickSignal),
-                           std::to_string(tick));
-                prevSent = 0;
+
+            if (command_execution(data, "Send a message")) {
+                emit_command(SIGNAL_D(InputHandler::enter_message_signal), data);
+                sent_count++;
+            } else {
+                tick++; emit_command(SIGNAL_D(InputHandler::tick_signal), to_string(tick));
+                sent_count = 0;
             }
-        }
-        else
-            findByPath("/")->setState(3);
+        } else
+            find_object_by_coordinate("/")->set_state(3);
     }
 }
-bool InputHandler::tryParseCMD(std::string& data, std::string cmd)
-{
-    if (data == cmd)
-    {
+
+bool InputHandler::command_execution(string &data, string command) {
+    if (data == command) {
         data = "";
         return true;
     }
-    if (data.rfind(cmd) == 0)
-    {
-        data = data.substr(cmd.length() + 1);
+    if (data.rfind(command) == 0) {
+        data = data.substr(command.length() + 1);
         return true;
     }
     return false;

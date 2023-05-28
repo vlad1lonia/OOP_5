@@ -4,16 +4,18 @@
 
 #include "OutputHandler.h"
 
-OutputHandler::OutputHandler(TreeNode* head, std::string nodeName) :
-        TreeNode(head, nodeName) { }
+OutputHandler::OutputHandler(ObjectsClass* head, string nodeName) :
+        ObjectsClass(head, nodeName) { }
 
-void OutputHandler::handlePrintMessage(std::string message)
-{
-    if (message == "SHOWTREE")
-    {
-        std::cout << std::endl;
-        findByPath("/")->printBranch(true);
+void OutputHandler::print_handler(string message) {
+
+    ObjectsClass* head_object = find_object_by_coordinate("/");
+
+    if (message == "SHOWTREE") {
+        cout << end_line;
+        head_object->print_states(1);
         exit(0);
     }
-    std::cout << (message == "Ready to work" ? "" : "\n") << message;
+
+    cout << (message == "Ready to work" ? "" : "\n") << message;
 }

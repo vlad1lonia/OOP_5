@@ -1,13 +1,12 @@
 #include <iostream>
 
-#include "System.h"
+#include "AppClass.h"
 
 int main()
 {
-    std::ios_base::sync_with_stdio(false);
-    std::cin.tie(nullptr); std::cout.tie(nullptr);
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr); cout.tie(nullptr);
 
-    System system(nullptr);
-    system.build();
-    return system.run();
+    AppClass app_class(nullptr);
+    app_class.build(); return app_class.execute();
 }

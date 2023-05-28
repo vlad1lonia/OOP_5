@@ -6,34 +6,41 @@
 #define OOP_5_COPIED_OPERATOR_H
 
 
-#include "TreeNode.h"
+#include "ObjectsClass.h"
 #include "Pager.h"
 #include <queue>
-struct Message
-{
-    std::string data;
-    int receiver;
-    int sender;
-    Message(int sender, int receiver, std::string data)
-    {
-        this->sender = sender;
-        this->receiver = receiver;
-        this->data = data;
+
+
+struct Message {
+public:
+    string text;
+    int receiver_id;
+    int sender_id;
+
+    Message(int sender_id, int receiver_id, string text) {
+        this->sender_id = sender_id;
+        this->receiver_id = receiver_id;
+        this->text = text;
     }
 };
-class Operator : public TreeNode
-{
+
+class Operator : public ObjectsClass {
+
 private:
-    std::queue<Message> messagesQueue;
-    int handledMessages = 0;
+    queue<Message> messages_queue;
+    int messages_handler_count = 0;
     int tick = 0;
+
 public:
-    Operator(TreeNode* head, std::string nodeName);
-    std::string getStatus();
-    void processSendMessageSignal(std::string& message);
-    void sendErrorMessage(std::string& message);
-    void handleSendMessage(std::string message);
-    void handleTick(std::string message);
+    Operator(ObjectsClass *head, string nodeName);
+
+    string get_status();
+
+    void send_signal(string &message);
+    void send_handler(string message);
+
+    void send_error(string &message);
+    void tick_handler(string message);
 };
 
 

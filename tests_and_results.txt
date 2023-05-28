@@ -1,0 +1,83 @@
+101
+104
+102
+103
+105
+End of information about pagers
+Display the system status
+Send a message 101 104 Yes. a
+Send a message 102 103 I will be there in an hour.
+Display the system status
+Send a message 101 103 Yes. a
+Send a message 102 105 Yes. a
+Send a message 103 115 Yes. a
+Display the system status
+Display the system status
+Display the system status
+
+
+Send a message 103 105 Yes. a
+
+
+Display the pager status 103
+Display the system status
+Turn off the system
+
+101
+102
+103
+104
+105
+106
+107
+End of information about pagers
+Display the system status
+SHOWTREE
+
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+Ready to work
+Pager 101 0 0
+Pager 102 0 0
+Pager 103 0 0
+Pager 104 0 0
+Pager 105 0 0
+Operator 0 0
+Pager 101 0 0
+Pager 102 0 0
+Pager 103 0 0
+Pager 104 0 0
+Pager 105 0 0
+Operator 0 0
+Pager 101 1 0
+Pager 102 0 0
+Pager 103 0 0
+Pager 104 0 1
+Pager 105 0 0
+Operator 1 0
+Subscriber 115 not found
+Pager 101 2 0
+Pager 102 1 0
+Pager 103 1 0
+Pager 104 0 1
+Pager 105 0 0
+Operator 1 2
+Pager 101 2 0
+Pager 102 1 0
+Pager 103 1 1
+Pager 104 0 1
+Pager 105 0 0
+Operator 2 1
+The list of messages sent by the pager 103
+5 115 Yes. a
+11 105 Yes. a
+List of received messages by the pager 103
+6 101 Yes. a
+7 102 I will be there in an hour.
+Pager 101 2 0
+Pager 102 1 0
+Pager 103 2 2
+Pager 104 0 1
+Pager 105 0 1
+Operator 4 0
+Turn off the ATM

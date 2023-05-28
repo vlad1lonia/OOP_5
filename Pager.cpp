@@ -4,85 +4,103 @@
 
 #include "Pager.h"
 
-Pager::Pager(TreeNode* head, std::string number) : TreeNode(head, "PAGER_" +
-                                                                  number)
-{
-    this->number = std::stoi(number, nullptr, 10);
+Pager::Pager(ObjectsClass *head_pointer, string object_name) :
+                            ObjectsClass(head_pointer, "PAGER_" + object_name) {
+    this->id = stoi(object_name, nullptr, 10);
 }
-std::string Pager::getStatus()
-{
-    return "Pager " + std::to_string(number) + " " +
-           std::to_string(sentMessages.size()) + " " +
-           std::to_string(receivedMessages.size());
+
+string Pager::get_status() {
+    return "Pager " + to_string(id) + space +
+           to_string(sent_messages.size()) + space +
+           to_string(received_messages.size());
 }
-int Pager::getNumber()
-{
-    return number;
+
+int Pager::get_id() {
+    return id;
 }
-void Pager::sendMessageSignal(std::string& message) { }
-void Pager::sendSentMessagesSignal(std::string& message) { }
-void Pager::handleSendMessage(std::string message)
-{
-    if (isBusy)
-        return;
-    std::stringstream stream(message);
+
+void Pager::sender_signal(string &message) {}
+
+void Pager::messages_data_signal(string &message) {}
+
+void Pager::sender_handler(string message) {
     int sender, receiver;
-    std::string msg;
+
+    if (occupied) { return; }
+
+    stringstream stream(message);
+    string current_message;
+
     stream >> sender >> receiver;
     stream.ignore();
-    std::getline(stream, msg);
-    if (sender == number)
-    {
-        sendingMessage = message;
-        smLength = msg.length();
-        isBusy = true;
+
+    getline(stream, current_message);
+    if (sender == id) {
+        pending_message = message;
+        message_length = current_message.length();
+        occupied = true;
+    }
+
+}
+
+void Pager::receiver_handler(string message) {
+
+    int sender, receiver, tick;
+    string current_message;
+
+    stringstream stream(message);
+    stream >> tick >> current_message >> receiver >> sender;
+    stream.ignore();
+
+    getline(stream, current_message);
+    if (receiver == id) {
+        received_messages.push_back(to_string(tick) + space +
+                                    to_string(sender) + space + current_message);
     }
 }
-void Pager::handleReceiveMessage(std::string message)
-{
-std::stringstream stream(message);
-int sender, receiver, tick;
-std::string msg;
-stream >> tick >> msg >> receiver >> sender;
-stream.ignore();
-std::getline(stream, msg);
-if (receiver == number)
-receivedMessages.push_back(std::to_string(tick) + " " +
-std::to_string(sender) + " " + msg);
+
+void Pager::messages_data_handler(string message) {
+    
+    if (!occupied && stoi(message, nullptr, 10) == id) {
+
+        string data_text = "The list of messages sent by the pager " +
+                           to_string(id);
+        for (int i = 0; i < sent_messages.size(); i++) {
+            data_text += "\n" + sent_messages[i];
+        }
+
+        data_text += "\nList of received messages by the pager " +
+                     to_string(id);
+
+        for (int i = 0; i < received_messages.size(); i++) {
+            data_text += "\n" + received_messages[i];
+        }
+
+        emit_command(SIGNAL_D(Pager::messages_data_signal), data_text);
+    }
 }
-void Pager::handleGetSentMessages(std::string message)
-{
-    if (isBusy || stoi(message, nullptr, 10) != number)
-        return;
-    std::string toSend = "The list of messages sent by the pager " +
-                         std::to_string(number);
-    for (int i = 0; i < sentMessages.size(); i++)
-        toSend += "\n" + sentMessages[i];
-    toSend += "\nList of received messages by the pager " +
-              std::to_string(number);
-    for (int i = 0; i < receivedMessages.size(); i++)
-        toSend += "\n" + receivedMessages[i];
-    emitSignal(AS_SIGNAL(Pager::sendSentMessagesSignal), toSend);
-}
-void Pager::handleTick(std::string message)
-{
-    tick = std::stoi(message, nullptr, 10);
-    if (sendingMessage != "" && isBusy)
-    {
-        if (smLength <= 0)
-        {
-            std::stringstream stream(sendingMessage);
-            int sender, receiver;
-            std::string msg;
+
+void Pager::tick_handler(string message) {
+
+    int sender, receiver; string current_message;
+    tick = stoi(message, nullptr, 10);
+
+    if (!pending_message.empty() && occupied) {
+
+        if (message_length <= 0) {
+
+            stringstream stream(pending_message);
             stream >> sender >> receiver;
             stream.ignore();
-            std::getline(stream, msg);
-            sentMessages.push_back(std::to_string(tick) + " " +
-                                   std::to_string(receiver) + " " + msg);
-            emitSignal(AS_SIGNAL(Pager::sendMessageSignal), sendingMessage);
-            isBusy = false;
-            sendingMessage = "";
+
+            getline(stream, current_message);
+            sent_messages.push_back(to_string(tick) + space +
+                                    to_string(receiver) + space + current_message);
+            emit_command(SIGNAL_D(Pager::sender_signal), pending_message);
+
+            occupied = false; pending_message = "";
         }
-        smLength -= 10;
+
+        message_length -= 10;
     }
 }

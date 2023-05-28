@@ -6,27 +6,35 @@
 #define OOP_5_COPIED_PAGER_H
 
 
-#include "TreeNode.h"
-class Pager : public TreeNode
-{
+#include "ObjectsClass.h"
+class Pager : public ObjectsClass {
+
 private:
-    int tick = 0;
-    int number = 0;
-    bool isBusy = false;
-    int smLength = 0;
-    std::string sendingMessage;
-    std::vector<std::string> sentMessages;
-    std::vector<std::string> receivedMessages;
+    int tick = 0; // Номер такта
+    int id = 0;   // Идентификатор (ID) пейджера
+
+    // Состояние занятости пейджера (true - занят, false - свободен)
+    bool occupied = false;
+    int message_length = 0; // Длина сообщение
+
+    string pending_message;           // Отправляющееся сообщение
+    vector<string> sent_messages;     // Контейнер отправленных сообщений
+    vector<string> received_messages; // Контейнер полученных сообщений
+    
 public:
-    Pager(TreeNode* head, std::string nodeName);
-    std::string getStatus();
-    int getNumber();
-    void handleReceiveMessage(std::string message);
-    void handleGetSentMessages(std::string message);
-    void handleSendMessage(std::string message);
-    void handleTick(std::string message);
-    void sendMessageSignal(std::string& message);
-    void sendSentMessagesSignal(std::string& message);
+    Pager(ObjectsClass* head_pointer, string object_name);
+
+    string get_status(); // Метод получения "Статуса" пейджера
+    int get_id();        // Метод получения идентификатора (ID) пейджера
+
+    void receiver_handler(string message);
+    void tick_handler(string message);
+
+    void sender_signal(string& message);
+    void sender_handler(string message);
+
+    void messages_data_signal(string& message);
+    void messages_data_handler(string message);
 };
 
 

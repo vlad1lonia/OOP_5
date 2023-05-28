@@ -6,11 +6,11 @@
 #define OOP_5_COPIED_OUTPUTHANDLER_H
 
 
-#include "TreeNode.h"
-class OutputHandler : public TreeNode {
+#include "ObjectsClass.h"
+class OutputHandler : public ObjectsClass {
 public:
-    OutputHandler(TreeNode* head, std::string nodeName);
-    void handlePrintMessage(std::string message);
+    OutputHandler(ObjectsClass* head, string nodeName);
+    void print_handler(string message);
 };
 
 
