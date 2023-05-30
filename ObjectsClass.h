@@ -25,11 +25,10 @@
 using namespace std;
 
 class ObjectsClass;
-typedef void (ObjectsClass::* TYPE_SIGNAL) (string& message);
-typedef void (ObjectsClass::* TYPE_HANDLER) (string message);
+typedef void (ObjectsClass::* TYPE_SIGNAL) ( string & );
+typedef void (ObjectsClass::* TYPE_HANDLER) ( string );
 
-struct Connection
-{
+struct Connection {
     TYPE_SIGNAL signal;
     ObjectsClass* target_object;
     TYPE_HANDLER handler;
@@ -76,7 +75,7 @@ public:
     void delete_object(string object_name); // Метод удаления объекта в дереве по имени
 
     void set_class_num(int new_num); // Метод установления значения поля номера класса class_num
-    int get_class_num();             // Метод получения значенич поля номера класса class_num
+    int get_class_num();             // Метод получения значения поля номера класса class_num
 
     string get_absolute_path(); // Метод полуения абсоютного пути объекта в дереве иерархий
 

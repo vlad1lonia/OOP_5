@@ -2,12 +2,14 @@
 // Created by Vlad04 on 28.05.2023.
 //
 
-#ifndef OOP_5_COPIED_PAGER_H
-#define OOP_5_COPIED_PAGER_H
+#ifndef OOP_5_COPIED_PAGERCLASS_H
+#define OOP_5_COPIED_PAGERCLASS_H
 
 
 #include "ObjectsClass.h"
-class Pager : public ObjectsClass {
+
+
+class PagerClass : public ObjectsClass {
 
 private:
     int tick = 0; // Номер такта
@@ -22,7 +24,7 @@ private:
     vector<string> received_messages; // Контейнер полученных сообщений
     
 public:
-    Pager(ObjectsClass* head_pointer, string object_name);
+    PagerClass(ObjectsClass* head_pointer, string object_name);
 
     string get_status(); // Метод получения "Статуса" пейджера
     int get_id();        // Метод получения идентификатора (ID) пейджера
@@ -38,4 +40,4 @@ public:
 };
 
 
-#endif //OOP_5_COPIED_PAGER_H
+#endif //OOP_5_COPIED_PAGERCLASS_H

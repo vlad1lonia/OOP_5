@@ -8,25 +8,27 @@
 
 #include <map>
 #include "ObjectsClass.h"
-#include "InputHandler.h"
-#include "Operator.h"
-#include "OutputHandler.h"
-#include "Pager.h"
+#include "InputClass.h"
+#include "OperatorClass.h"
+#include "OutputClass.h"
+#include "PagerClass.h"
 
 #define all(x) begin(x), end(x)
 
-class AppClass : public ObjectsClass
-{
+class AppClass : public ObjectsClass {
+
+private:
+    void addition_handler(string handler_text);
+    void status_handler(string handler_text);
+
+    void input_signal(string& signal_text);
+    void message_signal(string& signal_text);
+
 public:
     AppClass(ObjectsClass* head);
 
     void build();
     int execute();
-
-    void handlePagerAdd(string message);
-    void handleGetSystemStatus(string message);
-    void requireInputSignal(string& message);
-    void printMessageSignal(string& message);
 };
 
 

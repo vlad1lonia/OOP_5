@@ -229,11 +229,12 @@ ObjectsClass* ObjectsClass::find_object_by_coordinate(string coordinate) {
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-// Метод вывода дерева иерархий объектоа
+// Метод вывода дерева иерархий объектов
 void ObjectsClass::print_class_objects(int tab_num) {
 
     cout << this->get_object_name();
     for (int index = 0; index < this->class_objects.size(); index++) {
+
         cout << end_line;
         for (int index_j = 0; index_j < tab_num; index_j++) {
             cout << tab_space;
@@ -243,6 +244,7 @@ void ObjectsClass::print_class_objects(int tab_num) {
     }
 }
 
+// Метод получения дерева иерархий объектов
 vector<ObjectsClass*> ObjectsClass::get_class_objects() {
     return this->class_objects;
 }
@@ -262,6 +264,7 @@ void ObjectsClass::set_state(int state_num) {
     }
 }
 
+// Метод получения значения закрытого поля состояния объекта state
 int ObjectsClass::get_state() {
     return this->state;
 }

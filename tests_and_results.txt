@@ -81,3 +81,37 @@ Pager 104 0 1
 Pager 105 0 1
 Operator 4 0
 Turn off the ATM
+
+void AppClass::status_handler(string handler_text) {
+
+    OperatorClass* operator_object = (OperatorClass*) find_object_by_coordinate("/OPERATOR");
+    vector<ObjectsClass*> local_class_objects = operator_object->get_class_objects();
+
+    string status_string; vector<PagerClass*> pagers;
+
+    for (int index = 0; index < local_class_objects.size(); index++) {
+        pagers.push_back((PagerClass*) local_class_objects[index]);
+    }
+
+    while (!pagers.empty()) {
+
+        int required_id = INT32_MAX;
+        PagerClass* pager = nullptr;
+
+        for (int index = 0; index < pagers.size(); index++) {
+            int pager_id = pagers[index]->get_id();
+
+            if (pager_id < required_id) {
+                pager = pagers[index];
+                required_id = pager_id;
+            }
+        }
+
+        status_string += pager->get_status() + "\n";
+        pagers.erase(find(all(pagers), pager));
+    }
+
+    status_string += operator_object->get_status();
+    emit_command(SIGNAL_D(AppClass::message_signal), status_string);
+
+}
