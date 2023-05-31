@@ -88,7 +88,7 @@ public:
     * Метод сигнала от текущего объекта с передачей строкового параметра
     * Метод вызывается при вводе команды "EMIT" пользователем
     */
-    void emit_command(TYPE_SIGNAL signal, string command);
+    void emit_command(TYPE_SIGNAL signal, string& command);
 };
 
 

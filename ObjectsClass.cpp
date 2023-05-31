@@ -229,12 +229,11 @@ ObjectsClass* ObjectsClass::find_object_by_coordinate(string coordinate) {
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-// Метод вывода дерева иерархий объектов
+// Метод вывода дерева иерархий объектоа
 void ObjectsClass::print_class_objects(int tab_num) {
 
     cout << this->get_object_name();
     for (int index = 0; index < this->class_objects.size(); index++) {
-
         cout << end_line;
         for (int index_j = 0; index_j < tab_num; index_j++) {
             cout << tab_space;
@@ -251,7 +250,7 @@ vector<ObjectsClass*> ObjectsClass::get_class_objects() {
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-// Метод изменения значения закрытого поля state
+// Метод изменения значения закрытого поля состояния готовности state
 void ObjectsClass::set_state(int state_num) {
     if (head_pointer == nullptr || head_pointer->state != 0) {
         if (state_num == 0) {
@@ -264,7 +263,7 @@ void ObjectsClass::set_state(int state_num) {
     }
 }
 
-// Метод получения значения закрытого поля состояния объекта state
+// Метод получения значения закрытого поля состояния готовности state
 int ObjectsClass::get_state() {
     return this->state;
 }
@@ -406,7 +405,7 @@ void ObjectsClass::delete_connection(TYPE_SIGNAL signal, ObjectsClass* target_ob
 * Метод сигнала от текущего объекта с передачей строкового параметра
 * Метод вызывается при вводе команды "EMIT" пользователем
 */
-void ObjectsClass::emit_command(TYPE_SIGNAL signal, string command) {
+void ObjectsClass::emit_command(TYPE_SIGNAL signal, string& command) {
 
     TYPE_HANDLER handler; ObjectsClass* class_object;
 
