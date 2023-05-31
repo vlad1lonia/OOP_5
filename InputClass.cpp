@@ -11,7 +11,7 @@ bool InputClass::command_execution(string& input, string command) {
 
     if (input == command) {
         input = ""; return true;
-    } else if (input.rfind(command) == 0) {
+    } else if (input.find(command) == 0) {
         input = input.substr(command.length() + 1);
         return true;
     }
@@ -23,14 +23,18 @@ bool InputClass::command_execution(string& input, string command) {
 
 void InputClass::input_handler(string handler_text) {
 
+    ObjectsClass* root_object; root_object = find_object_by_coordinate("/");
     string tick_string = to_string(tick);
 
     string show_tree_text = "SHOWTREE";
+    string end_info_text = "End of information about pagers";
+    string off_text = "Turn off the system";
+    string system_status = "Display the system status";
+    string pager_status = "Display the pager status";
 
     string input; getline(cin, input);
-    ObjectsClass* root_object = find_object_by_coordinate("/");
 
-    if (handler_text == "PAGER" && input != "End of information about pagers") {
+    if (handler_text == "PAGER" && input != end_info_text) {
         emit_command(SIGNAL_D(InputClass::pager_addition_signal), input);
     } else {
         root_object->set_state(2);
@@ -38,18 +42,20 @@ void InputClass::input_handler(string handler_text) {
 
     if (handler_text == "COMMAND") {
 
-        if (input != "Turn off the system") {
+        if (input != off_text) {
 
-            if (sent_count != 0 && input.find("Send a message") != 0) {
+            int find_string = input.find("Send a message");
+
+            if (sent_count != 0 && find_string != 0) {
 
                 tick++; emit_command(SIGNAL_D(InputClass::tick_signal), tick_string);
             }
 
             if (command_execution(input, show_tree_text)) {
                 emit_command(SIGNAL_D(InputClass::show_tree_signal), show_tree_text);
-            } else if (command_execution(input, "Display the system status")) {
+            } else if (command_execution(input, system_status)) {
                 emit_command(SIGNAL_D(InputClass::app_class_status_signal), input);
-            } else if (command_execution(input, "Display the pager status")) {
+            } else if (command_execution(input, pager_status)) {
                 emit_command(SIGNAL_D(InputClass::pager_status_signal), input);
             }
 

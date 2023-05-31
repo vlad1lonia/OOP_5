@@ -22,29 +22,29 @@ void AppClass::build() {
 
     set_object_name("SYSTEM");
 
-    ObjectsClass* input_handler = new InputClass(this, "INPUT_HANDLER");
-    ObjectsClass* output_handler = new OutputClass(this, "OUTPUT_HANDLER");
+    ObjectsClass* input_object = new InputClass(this, "INPUT_HANDLER");
+    ObjectsClass* output_object = new OutputClass(this, "OUTPUT_HANDLER");
     ObjectsClass* operator_object = new OperatorClass(this, "OPERATOR");
 
     set_state_for_all();
 
     set_connection(SIGNAL_D(AppClass::input_signal),
-                   input_handler, HANDLER_D(InputClass::input_handler));
+                   input_object, HANDLER_D(InputClass::input_handler));
 
     set_connection(SIGNAL_D(AppClass::message_signal),
-                   output_handler, HANDLER_D(OutputClass::print_handler));
+                   output_object, HANDLER_D(OutputClass::print_handler));
 
     operator_object->set_connection(SIGNAL_D(OperatorClass::send_error_signal),
-                                    output_handler, HANDLER_D(OutputClass::print_handler));
+                                    output_object, HANDLER_D(OutputClass::print_handler));
 
-    input_handler->set_connection(SIGNAL_D(InputClass::pager_addition_signal),
-                                  this, HANDLER_D(AppClass::addition_handler));
+    input_object->set_connection(SIGNAL_D(InputClass::pager_addition_signal),
+                                 this, HANDLER_D(AppClass::addition_handler));
 
-    input_handler->set_connection(SIGNAL_D(InputClass::show_tree_signal),
-                                  output_handler, HANDLER_D(OutputClass::print_handler));
+    input_object->set_connection(SIGNAL_D(InputClass::show_tree_signal),
+                                 output_object, HANDLER_D(OutputClass::print_handler));
 
-    input_handler->set_connection(SIGNAL_D(InputClass::app_class_status_signal),
-                                  this, HANDLER_D(AppClass::status_handler));
+    input_object->set_connection(SIGNAL_D(InputClass::app_class_status_signal),
+                                 this, HANDLER_D(AppClass::status_handler));
 
     while (get_state() != 2) {
 
@@ -62,8 +62,10 @@ int AppClass::execute() {
 
     set_state_for_all();
 
-    while (get_state() != 3) {
+    int current_state = get_state();
+    while (current_state != 3) {
         emit_command(SIGNAL_D(AppClass::input_signal), command_string);
+        current_state = get_state();
     }
 
     emit_command(SIGNAL_D(AppClass::message_signal), turn_off_string);
@@ -75,9 +77,9 @@ int AppClass::execute() {
 
 void AppClass::addition_handler(string handler_text) {
 
-    ObjectsClass* operator_object = find_object_by_coordinate("/OPERATOR");
-    ObjectsClass* input_handler = find_object_by_coordinate("/INPUT_HANDLER");
-    ObjectsClass* output_handler = find_object_by_coordinate("/OUTPUT_HANDLER");
+    ObjectsClass* input_handler; input_handler = find_object_by_coordinate("/INPUT_HANDLER");
+    ObjectsClass* output_handler; output_handler = find_object_by_coordinate("/OUTPUT_HANDLER");
+    ObjectsClass* operator_object; operator_object = find_object_by_coordinate("/OPERATOR");
 
     PagerClass* pager = new PagerClass(operator_object, handler_text);
     operator_object->set_connection(SIGNAL_D(OperatorClass::send_signal),
@@ -109,7 +111,8 @@ void AppClass::status_handler(string handler_text) {
     string status_string; vector<PagerClass*> pagers;
 
     for (int index = 0; index < local_class_objects.size(); index++) {
-        pagers.push_back((PagerClass*) local_class_objects[index]);
+        PagerClass* local_pager; local_pager =(PagerClass*) local_class_objects[index];
+        pagers.push_back(local_pager);
     }
 
     while (!pagers.empty()) {
