@@ -31,6 +31,7 @@ int PagerClass::get_id() {
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+// Метод обработчика входящего сообщения
 void PagerClass::receiver_handler(string handler_text) {
 
     int sender_id, receiver_id, tick;
@@ -50,6 +51,7 @@ void PagerClass::receiver_handler(string handler_text) {
     }
 }
 
+// Метод обработчика такта пейджера
 void PagerClass::tick_handler(string handler_text) {
 
     int sender_id, receiver_id;
@@ -81,8 +83,10 @@ void PagerClass::tick_handler(string handler_text) {
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+// Метод сигнала отправки сообщения оператору
 void PagerClass::sender_signal(string& signal_text) { }
 
+// Метод обработчика ввода содержимого сообщения
 void PagerClass::sender_handler(string handler_text) {
 
     if (occupied) { return; }
@@ -106,8 +110,11 @@ void PagerClass::sender_handler(string handler_text) {
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+// Метод сигнала отправки данных о всех сообщениях пейджера
 void PagerClass::messages_data_signal(string& signal_text) { };
 
+
+// Метод обработчика получения данных о всех сообщениях пейджера
 void PagerClass::messages_data_handler(string handler_text) {
 
     string id_string = to_string(id);

@@ -1,9 +1,5 @@
-//
-// Created by Vlad04 on 28.05.2023.
-//
-
-#ifndef OOP_5_COPIED_INPUTCLASS_H
-#define OOP_5_COPIED_INPUTCLASS_H
+#ifndef __INPUTCLASS__H
+#define __INPUTCLASS__H
 
 
 #include "ObjectsClass.h"
@@ -15,22 +11,25 @@ private:
     int sent_count = 0; // Количество отправленных сообщений
     int tick = 0;       // Номер такта
 
-    bool command_execution(string& input, string command); // Метод запуска команды
+    // Метод проверки введённой команды
+    bool command_execution(string& input, string command);
 
 public:
     // Конструктор класса
     InputClass(ObjectsClass* head_pointer, string object_name);
 
+    // Метод обработчика ввода команды
     void input_handler(string handler_text);
 
-    void pager_addition_signal(string& signal_text);
-    void pager_status_signal(string& signal_text);
+    void pager_addition_signal(string& signal_text);   // Метод сигнала добавления пейджера
+    void pager_status_signal(string& signal_text);     // Метод сигнала полкчения статуса пейджера
 
-    void app_class_status_signal(string& signal_text);
-    void enter_message_signal(string& signal_text);
+    void app_class_status_signal(string& signal_text); // Метод сигнала получения статуса системы
+    void enter_message_signal(string& signal_text);    // Метод сигнала ввода содержимого сообщения
 
-    void show_tree_signal(string& signal_text);
-    void tick_signal(string& signal_text);
+    void show_tree_signal(string& signal_text);        // Метод сигнала вывода дерева иерархий
+    void tick_signal(string& signal_text);             // Метод сигнала такта
 };
 
-#endif //OOP_5_COPIED_INPUTCLASS_H
+
+#endif

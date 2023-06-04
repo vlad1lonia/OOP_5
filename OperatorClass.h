@@ -25,6 +25,7 @@ class OperatorClass : public ObjectsClass {
 
 private:
     int messages_handler_count = 0; // Количество обработанных сообщений
+    int sent_count = 0;             // Количество отправленных сообщений
     int tick = 0;                   // Номер такта
 
     // Очередь из сообщений
@@ -37,6 +38,8 @@ public:
     string get_status(); // Метод получения состояния (статуса)
 
     void tick_handler(string handler_text); // Метод обработчика такта оператора
+
+    void pager_addition_signal(string& signal_text);
 
     void send_signal(string& signal_text);          // Метод сигнала пейджера
     void send_handler(string handler_text);         // Метод обработчика сообщения

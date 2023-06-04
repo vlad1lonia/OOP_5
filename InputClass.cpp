@@ -7,6 +7,7 @@ InputClass::InputClass(ObjectsClass* head_pointer, string object_name)
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+// Метод проверки введённой команды
 bool InputClass::command_execution(string& input, string command) {
 
     if (input == command) {
@@ -21,6 +22,7 @@ bool InputClass::command_execution(string& input, string command) {
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+// Метод обработчика ввода команды
 void InputClass::input_handler(string handler_text) {
 
     ObjectsClass* root_object; root_object = find_object_by_coordinate("/");
@@ -75,18 +77,24 @@ void InputClass::input_handler(string handler_text) {
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+// Метод сигнала добавлени пейджера
 void InputClass::pager_addition_signal(string& signal_text) { }
 
+// Метод сигнала получения статуса пейджера
 void InputClass::pager_status_signal(string& signal_text) { }
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+// Метод сигнала получения статуса пейджера
 void InputClass::app_class_status_signal(string& signal_text) { }
 
+// Метод сигнала ввода содержимого сообщения
 void InputClass::enter_message_signal(string& signal_text) { }
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+// Метод сигнала вывода дерева иерархий
 void InputClass::show_tree_signal(string& signal_text) { }
 
+// Метод такта сигнала
 void InputClass::tick_signal(string& signal_text) { }

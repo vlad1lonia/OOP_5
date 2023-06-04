@@ -7,6 +7,7 @@ OperatorClass::OperatorClass(ObjectsClass* head_pointer, string object_name)
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+// Конструктор структуры Message
 Message::Message(int sender_id, int receiver_id, string text) {
     this->sender_id = sender_id;
     this->receiver_id = receiver_id;
@@ -15,6 +16,7 @@ Message::Message(int sender_id, int receiver_id, string text) {
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+// Метод получения статуса оператора
 string OperatorClass::get_status() {
 
     string count_string = to_string(messages_handler_count);
@@ -26,6 +28,7 @@ string OperatorClass::get_status() {
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+// Метод обработчика такта оператора
 void OperatorClass::tick_handler(string handler_text) {
 
     if (!messages_queue.empty()) {
@@ -48,8 +51,10 @@ void OperatorClass::tick_handler(string handler_text) {
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+// Метод сигнала отправки сообщения
 void OperatorClass::send_signal(string& signal_text) { }
 
+// Метод обработчика отправки сообщения
 void OperatorClass::send_handler(string handler_text) {
 
     int sender_id, receiver_id;
@@ -74,4 +79,5 @@ void OperatorClass::send_handler(string handler_text) {
     }
 }
 
+// Метод сигнала ошибки
 void OperatorClass::send_error_signal(string& error_text) { }

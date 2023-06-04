@@ -7,7 +7,9 @@ OutputClass::OutputClass(ObjectsClass* head_pointer, string object_name)
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-void OutputClass::print_handler(string handler_text) {
+void OutputClass::output_signal(std::string &signal_text) { }
+
+void OutputClass::output_handler(string handler_text) {
 
     ObjectsClass* root_object; root_object = find_object_by_coordinate("/");
 

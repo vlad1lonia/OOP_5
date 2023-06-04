@@ -12,7 +12,9 @@
 class OutputClass : public ObjectsClass {
 public:
     OutputClass(ObjectsClass* head_pointer, string object_name);
-    void print_handler(string message);
+
+    void output_signal(string& signal_text);
+    void output_handler(string handler_text);
 };
 
 

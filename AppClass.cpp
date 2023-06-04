@@ -39,11 +39,11 @@ void AppClass::build() {
 
     // Показ содержимиого сообщения
     set_connection(SIGNAL_D(AppClass::message_signal),
-                   output_object, HANDLER_D(OutputClass::print_handler));
+                   output_object, HANDLER_D(OutputClass::output_handler));
 
     // Показ информации от оператора
     operator_object->set_connection(SIGNAL_D(OperatorClass::send_error_signal),
-                                    output_object, HANDLER_D(OutputClass::print_handler));
+                                    output_object, HANDLER_D(OutputClass::output_handler));
 
     // Добавление нового пейджера в систему
     input_object->set_connection(SIGNAL_D(InputClass::pager_addition_signal),
@@ -51,7 +51,7 @@ void AppClass::build() {
 
     // Показ дерева иерархий
     input_object->set_connection(SIGNAL_D(InputClass::show_tree_signal),
-                                 output_object, HANDLER_D(OutputClass::print_handler));
+                                 output_object, HANDLER_D(OutputClass::output_handler));
 
     // Показ состояния (статуса) системы
     input_object->set_connection(SIGNAL_D(InputClass::app_class_status_signal),
@@ -59,6 +59,8 @@ void AppClass::build() {
 
     int current_state = get_state();
     while (current_state != 2) {
+
+
         emit_command(SIGNAL_D(AppClass::input_signal), pager_text);
         current_state = get_state();
     }
@@ -89,7 +91,7 @@ int AppClass::execute() {
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-// Метод обработчика добавления
+// Метод обработчика добавления пейджера
 void AppClass::addition_handler(string handler_text) {
 
     ObjectsClass* input_object; input_object = find_object_by_coordinate("/Input");
@@ -106,7 +108,7 @@ void AppClass::addition_handler(string handler_text) {
     pager->set_connection(SIGNAL_D(PagerClass::sender_signal),
                           operator_object, HANDLER_D(OperatorClass::send_handler));
     pager->set_connection(SIGNAL_D(PagerClass::messages_data_signal),
-                          output_object, HANDLER_D(OutputClass::print_handler));
+                          output_object, HANDLER_D(OutputClass::output_handler));
 
     input_object->set_connection(SIGNAL_D(InputClass::tick_signal),
                                  operator_object, HANDLER_D(OperatorClass::tick_handler));
@@ -121,6 +123,7 @@ void AppClass::addition_handler(string handler_text) {
 
 }
 
+// Метод обработчика сбора информации и её выдачи
 void AppClass::status_handler(string handler_text) {
 
     OperatorClass* operator_object = (OperatorClass*) find_object_by_coordinate("/Operator");
@@ -158,6 +161,8 @@ void AppClass::status_handler(string handler_text) {
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+// Метод сигнала запроса пользовательского ввода
 void AppClass::input_signal(string& signal_text) { }
 
+// Метод сигнала вывода содержимого сообщения
 void AppClass::message_signal(string& signal_text) { }
